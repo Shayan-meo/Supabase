@@ -1,0 +1,7 @@
+node_modules/
+
+# local backup of previous git dir
+.git_backup/
+
+# duplicate/scratch copy of the project, not part of the repo
+data_push_html,js/
