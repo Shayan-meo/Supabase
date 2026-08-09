@@ -1,0 +1,25 @@
+# 📊 Supabase SQL Database Practice
+
+A structured PostgreSQL database setup created using **Supabase**, featuring core schema design, sample data seeding, and database architecture visualization.
+
+---
+
+## 🗄️ Database Architecture
+
+Below is the entity layout and schema visualizer generated from Supabase:
+
+![Database Schema Visualizer](./docs/images/schema-visualizer.png)
+
+---
+
+## 📁 Repository Structure
+
+```text
+.
+├── database/
+│   ├── schema.sql    # Table definitions (CREATE TABLE statements)
+│   └── seed.sql      # Dummy/Sample data inserts (INSERT INTO statements)
+├── docs/
+│   └── images/
+│       └── schema-visualizer.png  # Supabase ER/Schema Diagram
+└── README.md         # Documentation
