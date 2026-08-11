@@ -4,7 +4,6 @@ CREATE TABLE citizes (
     population INT,
     area int 
     )
-    
 CREATE TABLE Products (
     ProductID INT PRIMARY KEY,
     ProductName VARCHAR(100),
