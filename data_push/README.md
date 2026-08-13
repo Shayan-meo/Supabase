@@ -8,6 +8,7 @@ No framework, no build step — just plain **HTML**, **JavaScript**, and the Sup
 
 ## Features
 
+
 - Clean form with four fields: name, age, country, email
 - Client-side validation before any network call
 - Direct insert into a Supabase table via the official JS client
