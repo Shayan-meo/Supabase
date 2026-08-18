@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Supabase Upload - Simple</title>
+</head>
+<body style="font-family: sans-serif; max-width: 500px; margin: 40px auto;">
+
+<h2>Supabase Mein Pic Upload</h2>
+
+<!-- 1. File Input -->
+<input type="file" id="fileInput" accept="image/*">
+<br><br>
+<button id="uploadBtn">Upload Karo</button>
+
+<p id="status"></p>
+<img id="preview" style="width:100%; display:none; margin-top:15px; border-radius:10px;">
+<br>
+<input type="text" id="urlBox" style="width:100%; display:none; padding:10px;" readonly placeholder="Yahan URL ayega">
+
+<!-- 2. Supabase Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+    // --- YAHAN APNI KEYS DALO ---
+  const SUPABASE_URL = 'https://kkqhxxkwgefaywwnavxu.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_ysMZbzxPqm7PXlaKP_EVTA_22ZGpvuz';
+  const BUCKET = 'profile'; // tumhara bucket name
+
+  // Client banao
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const fileInput = document.getElementById('fileInput');
+  const uploadBtn = document.getElementById('uploadBtn');
+  const status = document.getElementById('status');
+  const preview = document.getElementById('preview');
+  const urlBox = document.getElementById('urlBox');
+
+  uploadBtn.onclick = async () => {
+    const file = fileInput.files[0];
+    if (!file) {
+      alert('Pehle pic select karo');
+      return;
+    }
+
+    status.innerText = 'Upload ho raha hai...';
+    uploadBtn.disabled = true;
+
+    // Unique naam
+    const filePath = `pics/${Date.now()}-${file.name}`;
+
+    try {
+      // 1. UPLOAD CODE
+      const { error } = await supabaseClient.storage
+        .from(BUCKET)
+        .upload(filePath, file);
+
+      if (error) throw error;
+
+      // 2. URL NIKALNE KA CODE
+      const { data } = supabaseClient.storage
+        .from(BUCKET)
+        .getPublicUrl(filePath);
+
+      const publicUrl = data.publicUrl;
+
+      status.innerText = 'Upload ho gaya! ✅';
+      preview.src = publicUrl;
+      preview.style.display = 'block';
+      urlBox.style.display = 'block';
+      urlBox.value = publicUrl;
+
+      console.log('URL:', publicUrl);
+
+    } catch (err) {
+      status.innerText = 'Error: ' + err.message;
+      console.error(err);
+    } finally {
+      uploadBtn.disabled = false;
+    }
+  }
+
+</script>
+</body>
+</html>
